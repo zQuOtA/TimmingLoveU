@@ -1,0 +1,146 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    /* Romantic theme - Rose Gold & Pastels */
+    --background: 350 100% 99%;
+    --foreground: 340 15% 15%;
+
+    --card: 350 50% 98%;
+    --card-foreground: 340 15% 15%;
+ 
+    --popover: 350 50% 98%;
+    --popover-foreground: 340 15% 15%;
+ 
+    --primary: 345 83% 47%; /* Rose Pink */
+    --primary-foreground: 350 100% 99%;
+ 
+    --secondary: 350 30% 92%; /* Soft Rose */
+    --secondary-foreground: 340 15% 25%;
+ 
+    --muted: 45 46% 90%; /* Warm Beige */
+    --muted-foreground: 340 10% 50%;
+ 
+    --accent: 45 86% 83%; /* Gold */
+    --accent-foreground: 340 15% 25%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 350 20% 88%;
+    --input: 350 20% 95%;
+    --ring: 345 83% 47%;
+ 
+    --radius: 0.75rem;
+    
+    /* Custom romantic colors */
+    --romantic-pink: 345 83% 47%;
+    --romantic-rose: 350 30% 92%; 
+    --romantic-gold: 45 86% 83%;
+    --romantic-beige: 45 46% 90%;
+    --romantic-cream: 350 100% 99%;
+  }
+ 
+  .dark {
+    /* Keep original dark theme for now */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+ 
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+ 
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+ 
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 84% 4.9%;
+ 
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+ 
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+ 
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+ 
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-gray-200;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom romantic styles */
+@layer components {
+  .font-romantic {
+    font-family: var(--font-playfair), serif;
+  }
+  
+  .bg-romantic-gradient {
+    @apply bg-gradient-to-br from-pink-50 via-rose-50 to-orange-50;
+  }
+  
+  .bg-romantic-hero {
+    @apply bg-gradient-to-r from-pink-100/50 via-rose-100/50 to-orange-100/50;
+  }
+  
+  .bg-romantic-card {
+    @apply bg-white/80 backdrop-blur-sm border border-pink-100 shadow-lg shadow-pink-100/50;
+  }
+  
+  .btn-romantic {
+    @apply bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+  
+  .btn-romantic-outline {
+    @apply border-pink-500 text-pink-600 hover:bg-pink-50 hover:border-pink-600;
+  }
+  
+  .text-shadow-romantic {
+    text-shadow: 0 2px 4px rgba(244, 114, 182, 0.1);
+  }
+  
+  /* Animations */
+  @keyframes heart-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-heart-pulse {
+    animation: heart-pulse 2s infinite;
+  }
+  
+  .animate-fade-in {
+    animation: fade-in 1s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slide-up 0.6s ease-out forwards;
+    opacity: 0;
+  }
+}

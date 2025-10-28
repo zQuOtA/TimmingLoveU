@@ -1,0 +1,44 @@
+{
+  "name": "timming-loveu-static",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "export": "next build && next export",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@radix-ui/react-accordion": "1.2.0",
+    "@radix-ui/react-alert-dialog": "1.1.1",
+    "@radix-ui/react-avatar": "1.1.0",
+    "@radix-ui/react-dialog": "1.1.1",
+    "@radix-ui/react-label": "2.1.0",
+    "@radix-ui/react-progress": "1.1.0",
+    "@radix-ui/react-separator": "1.1.0",
+    "@radix-ui/react-slot": "1.1.0",
+    "@radix-ui/react-tabs": "1.1.0",
+    "class-variance-authority": "0.7.0",
+    "clsx": "2.1.1",
+    "date-fns": "3.6.0",
+    "framer-motion": "10.18.0",
+    "lucide-react": "0.446.0",
+    "next": "14.2.33",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwind-merge": "2.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "20.6.2",
+    "@types/react": "18.2.22",
+    "@types/react-dom": "18.2.7",
+    "autoprefixer": "10.4.15",
+    "eslint": "^9.38.0",
+    "eslint-config-next": "15.3.0",
+    "postcss": "^8.4.49",
+    "tailwindcss": "3.3.3",
+    "tailwindcss-animate": "1.0.7",
+    "typescript": "5.2.2"
+  }
+}

@@ -1,0 +1,476 @@
+═══════════════════════════════════════════════════════════════════════════════
+                    RELATÓRIO DE ESTRUTURA - TIMMING LOVEU
+═══════════════════════════════════════════════════════════════════════════════
+
+📅 Data de Análise: 28 de Outubro de 2025
+📦 Localização: /home/ubuntu/timming_love_u/TimmingLoveU/
+🎯 Tipo de Aplicação: Web Application Full-Stack (Next.js 14)
+
+═══════════════════════════════════════════════════════════════════════════════
+                              RESUMO EXECUTIVO
+═══════════════════════════════════════════════════════════════════════════════
+
+O Timming LoveU é uma aplicação web completa desenvolvida com Next.js 14 para 
+criação de páginas românticas personalizadas para casais. A aplicação oferece 
+funcionalidades de autenticação, gerenciamento de mídia, sistema de assinaturas 
+e páginas públicas compartilháveis.
+
+CARACTERÍSTICAS PRINCIPAIS:
+✅ Aplicação Next.js 14 com TypeScript
+✅ Backend integrado (Next.js API Routes)
+✅ Autenticação completa (NextAuth.js)
+✅ Banco de dados PostgreSQL com Prisma ORM
+✅ Sistema de assinaturas (Stripe/Mercado Pago)
+✅ Upload e gerenciamento de mídia
+✅ Testes automatizados (Jest)
+✅ Containerização com Docker
+✅ Pronto para produção (com guias de deploy)
+
+═══════════════════════════════════════════════════════════════════════════════
+                         TIPO DE APLICAÇÃO E TECNOLOGIAS
+═══════════════════════════════════════════════════════════════════════════════
+
+TIPO: Aplicação Web Full-Stack com SSR/SSG (Server-Side Rendering/Static Site Generation)
+
+REQUER BUILD: ✅ Sim
+COMANDO BUILD: npm run build
+COMANDO DEV: npm run dev
+COMANDO PRODUÇÃO: npm run start
+
+STACK TECNOLÓGICA:
+
+Frontend:
+  • Next.js 14.2.33 (React 18.2.0)
+  • TypeScript 5.2.2
+  • Tailwind CSS 3.3.3
+  • Radix UI (componentes acessíveis)
+  • Framer Motion (animações)
+  • React Hook Form + Zod (formulários e validação)
+  • Chart.js / Recharts / Plotly (visualizações)
+
+Backend:
+  • Next.js API Routes
+  • NextAuth.js 4.24.11 (autenticação)
+  • Prisma 6.7.0 (ORM)
+  • PostgreSQL (banco de dados)
+
+Pagamentos:
+  • Stripe 19.1.0
+  • Mercado Pago 2.9.0
+
+Estado & Cache:
+  • Zustand 5.0.3 (state management)
+  • SWR 2.2.4 (data fetching)
+  • TanStack Query 5.0.0
+
+Infraestrutura:
+  • Docker & Docker Compose
+  • Nginx (load balancer/proxy)
+  • PM2 (process manager)
+
+Testes:
+  • Jest 30.2.0
+  • Testing Library
+  • ts-jest
+
+═══════════════════════════════════════════════════════════════════════════════
+                          ESTRUTURA DE DIRETÓRIOS
+═══════════════════════════════════════════════════════════════════════════════
+
+/TimmingLoveU/
+│
+├── app/                          # 🎯 DIRETÓRIO PRINCIPAL DA APLICAÇÃO (App Router)
+│   ├── api/                      # Rotas de API (Backend)
+│   │   ├── auth/                 # Endpoints de autenticação
+│   │   ├── couple-page/          # CRUD de páginas de casal
+│   │   ├── dashboard/            # APIs do dashboard
+│   │   ├── health/               # Health check
+│   │   ├── media/                # Upload e gerenciamento de mídia
+│   │   ├── subscriptions/        # Gerenciamento de assinaturas
+│   │   ├── stripe/               # Webhooks Stripe
+│   │   └── mercadopago/          # Webhooks Mercado Pago
+│   │
+│   ├── contato/                  # Página de contato
+│   ├── dashboard/                # Dashboard do usuário (área logada)
+│   ├── exemplo/                  # Página exemplo/demo
+│   ├── login/                    # Página de login
+│   ├── pricing/                  # Página de planos e preços
+│   ├── signup/                   # Página de cadastro
+│   │
+│   ├── layout.tsx               # 🎯 LAYOUT PRINCIPAL (Root Layout)
+│   ├── page.tsx                 # 🎯 PÁGINA INICIAL (Homepage)
+│   └── globals.css              # Estilos globais
+│
+├── components/                   # Componentes React reutilizáveis
+│   ├── dashboard/               # Componentes específicos do dashboard
+│   ├── ui/                      # Componentes de UI (Radix UI)
+│   └── theme-provider.tsx       # Provider de temas (dark/light)
+│
+├── lib/                         # Bibliotecas e utilitários
+│   ├── auth/                    # Configuração de autenticação
+│   ├── payment/                 # Integração com pagamentos
+│   ├── db.ts                    # Cliente de banco de dados
+│   ├── prisma.ts                # Singleton do Prisma Client
+│   ├── rate-limit.ts            # Rate limiting
+│   ├── types.ts                 # Definições de tipos TypeScript
+│   └── utils.ts                 # Funções utilitárias
+│
+├── hooks/                       # React Hooks customizados
+│   ├── use-toast.ts             # Hook para notificações
+│   └── useSubscription.ts       # Hook para gerenciar assinaturas
+│
+├── prisma/                      # Configuração do ORM Prisma
+│   └── schema.prisma            # 🗄️ SCHEMA DO BANCO DE DADOS
+│
+├── public/                      # Arquivos estáticos públicos
+│   ├── favicon.svg              # Ícone do site
+│   ├── og-image.png             # Imagem para Open Graph
+│   └── uploads/                 # Diretório para uploads (dev)
+│
+├── scripts/                     # Scripts de automação
+│   ├── health-check.sh          # Script de health check
+│   ├── init-db.sql              # Inicialização do banco
+│   ├── migrate-prod.sh          # Migrations de produção
+│   ├── post-deploy.sh           # Script pós-deploy
+│   ├── pre-deploy.sh            # Script pré-deploy
+│   └── seed.ts                  # Seed do banco de dados
+│
+├── __tests__/                   # Testes automatizados
+│   └── integration/             # Testes de integração
+│
+├── __mocks__/                   # Mocks para testes
+│   ├── next-auth.ts
+│   └── prisma.ts
+│
+├── nginx/                       # Configuração do Nginx
+│   ├── nginx.conf
+│   └── ssl/                     # Certificados SSL
+│
+├── logs/                        # Diretório de logs
+│
+├── 📄 ARQUIVOS DE CONFIGURAÇÃO:
+├── .env                         # Variáveis de ambiente (local)
+├── .env.example                 # Template de variáveis
+├── .env.production.example      # Template de produção
+├── next.config.js               # Configuração do Next.js
+├── tailwind.config.ts           # Configuração do Tailwind
+├── tsconfig.json                # Configuração do TypeScript
+├── package.json                 # Dependências e scripts
+├── components.json              # Configuração de componentes
+├── jest.config.js               # Configuração de testes
+├── postcss.config.js            # Configuração do PostCSS
+├── Dockerfile                   # Imagem Docker
+├── docker-compose.yml           # Orquestração Docker
+├── ecosystem.config.js          # Configuração PM2
+├── vercel.json                  # Deploy Vercel
+│
+└── 📚 DOCUMENTAÇÃO:
+    ├── DEPLOYMENT_GUIDE.md          # Guia completo de deploy
+    ├── DEPLOYMENT_SUMMARY.md        # Resumo de deploy
+    ├── IMPLEMENTATION_GUIDE.md      # Guia de implementação
+    ├── PRODUCTION_README.md         # README para produção
+    ├── PAYMENT_SETUP.md             # Configuração de pagamentos
+    ├── SECURITY_CHECKLIST.md        # Checklist de segurança
+    ├── SECURITY_UPDATES.md          # Atualizações de segurança
+    ├── TESTING_GUIDE.md             # Guia de testes
+    └── README_TESTES_E_SEGURANCA.md # Testes e segurança
+
+═══════════════════════════════════════════════════════════════════════════════
+                            ARQUIVO DE ENTRADA PRINCIPAL
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 PÁGINA INICIAL:
+   /app/page.tsx - Homepage com landing page do Timming LoveU
+
+📄 LAYOUT ROOT:
+   /app/layout.tsx - Layout principal que envolve toda a aplicação
+
+📄 PONTO DE ENTRADA DO SERVIDOR:
+   Next.js gerencia automaticamente (não há arquivo server.js explícito)
+
+COMANDO PARA DESENVOLVIMENTO:
+   npm run dev        → Inicia em http://localhost:3000
+
+COMANDO PARA PRODUÇÃO:
+   npm run build      → Gera build otimizado
+   npm run start      → Inicia servidor de produção
+
+═══════════════════════════════════════════════════════════════════════════════
+                          MODELOS DO BANCO DE DADOS
+═══════════════════════════════════════════════════════════════════════════════
+
+BANCO: PostgreSQL (gerenciado via Prisma ORM)
+
+TABELAS PRINCIPAIS:
+
+1. users (Usuários)
+   - Autenticação e perfil
+   - Controle de assinaturas (planoAtivo, dataExpiracaoPlano)
+   - Flag isAdmin para administradores
+
+2. accounts (Contas OAuth)
+   - Integração com provedores (Google, GitHub, etc.)
+
+3. sessions (Sessões)
+   - Gerenciamento de sessões NextAuth
+
+4. couple_pages (Páginas de Casais)
+   - Informações do casal
+   - Galeria de fotos
+   - Vídeos
+   - Música
+   - Slug público para compartilhamento
+   - Contador de visualizações
+
+5. media (Mídia)
+   - Upload de arquivos
+   - Vinculado a usuários e páginas
+
+6. plano_assinatura (Planos de Assinatura)
+   - Configuração de planos
+   - Preços e características
+
+7. user_subscription (Assinaturas de Usuários)
+   - Controle de pagamentos
+   - Status de assinatura
+   - Integração com Stripe/Mercado Pago
+
+═══════════════════════════════════════════════════════════════════════════════
+                        REQUISITOS PARA EXECUÇÃO
+═══════════════════════════════════════════════════════════════════════════════
+
+REQUISITOS MÍNIMOS:
+
+1. Node.js:
+   ✅ Versão: 18.x ou superior (recomendado: 20.x)
+
+2. Gerenciador de Pacotes:
+   ✅ npm (incluído com Node.js) ou yarn
+
+3. Banco de Dados:
+   ✅ PostgreSQL 14+ (local ou remoto - ex: Neon, Supabase)
+
+4. Variáveis de Ambiente OBRIGATÓRIAS:
+   ✅ DATABASE_URL           → URL de conexão PostgreSQL
+   ✅ NEXTAUTH_SECRET        → Segredo JWT (gerar com: openssl rand -base64 32)
+   ✅ NEXTAUTH_URL           → URL da aplicação
+
+5. Variáveis OPCIONAIS (mas recomendadas):
+   - PAYMENT_PROVIDER        → "stripe" ou "mercadopago"
+   - STRIPE_SECRET_KEY       → Para pagamentos Stripe
+   - MERCADOPAGO_ACCESS_TOKEN → Para pagamentos Mercado Pago
+   - EMAIL_SERVER            → Para envio de emails
+   - AWS_* ou CLOUDINARY_*   → Para armazenamento de mídia
+
+═══════════════════════════════════════════════════════════════════════════════
+                        COMANDOS DISPONÍVEIS (Scripts)
+═══════════════════════════════════════════════════════════════════════════════
+
+DESENVOLVIMENTO:
+  npm run dev                  → Inicia servidor de desenvolvimento (porta 3000)
+  npm run build                → Cria build de produção otimizado
+  npm run start                → Inicia servidor de produção
+  npm run lint                 → Verifica problemas no código
+  npm run type-check           → Verifica tipos TypeScript
+  npm run format               → Formata código com Prettier
+
+TESTES:
+  npm test                     → Executa todos os testes
+  npm run test:watch           → Executa testes em modo watch
+  npm run test:coverage        → Gera relatório de cobertura
+  npm run test:unit            → Testes unitários
+  npm run test:integration     → Testes de integração
+
+BANCO DE DADOS:
+  npm run prisma:generate      → Gera Prisma Client
+  npm run prisma:migrate       → Executa migrations
+  npm run prisma:studio        → Abre interface visual do Prisma
+  npm run prisma:seed          → Popula banco com dados iniciais
+  npm run db:push              → Sincroniza schema sem migrations
+  npm run db:migrate:dev       → Migrations em desenvolvimento
+  npm run db:migrate:prod      → Migrations em produção
+
+DOCKER:
+  npm run docker:build         → Constrói imagem Docker
+  npm run docker:up            → Sobe containers em background
+  npm run docker:down          → Para containers
+  npm run docker:logs          → Visualiza logs dos containers
+  npm run docker:restart       → Reinicia containers
+
+DEPLOY:
+  npm run health               → Verifica saúde da aplicação
+  npm run pre-deploy           → Script pré-deploy
+  npm run post-deploy          → Script pós-deploy
+
+═══════════════════════════════════════════════════════════════════════════════
+                        FLUXO DE INICIALIZAÇÃO
+═══════════════════════════════════════════════════════════════════════════════
+
+PRIMEIRA VEZ (Setup Completo):
+
+1. Instalar Dependências:
+   cd /home/ubuntu/timming_love_u/TimmingLoveU
+   npm install
+
+2. Configurar Variáveis de Ambiente:
+   cp .env.example .env
+   # Editar .env com valores reais (DATABASE_URL, NEXTAUTH_SECRET, etc.)
+
+3. Configurar Banco de Dados:
+   npm run prisma:generate     # Gera Prisma Client
+   npm run db:migrate:dev      # Cria estrutura do banco
+   npm run prisma:seed         # (Opcional) Popula dados iniciais
+
+4. Iniciar em Desenvolvimento:
+   npm run dev
+   # Acesse: http://localhost:3000
+
+DEPLOY EM PRODUÇÃO:
+
+Opção A - Docker (Recomendado):
+   1. cp .env.example .env.production
+   2. # Editar .env.production com valores de produção
+   3. npm run docker:up
+
+Opção B - Vercel (Mais Simples):
+   1. Conectar repositório Git à Vercel
+   2. Configurar variáveis de ambiente no dashboard
+   3. Deploy automático
+
+Opção C - VPS/Servidor Próprio:
+   1. npm run build
+   2. npm run prisma:migrate
+   3. npm run start (com PM2 ou similar)
+
+═══════════════════════════════════════════════════════════════════════════════
+                        FUNCIONALIDADES PRINCIPAIS
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ AUTENTICAÇÃO E USUÁRIOS:
+   • Registro e login com email/senha
+   • Autenticação OAuth (Google, GitHub)
+   • Gerenciamento de sessões seguras
+   • Recuperação de senha
+   • Perfis de usuário
+
+✅ PÁGINAS DE CASAIS:
+   • Criação de páginas personalizadas
+   • Upload de fotos e vídeos
+   • Música de fundo personalizada
+   • Banner personalizado
+   • Mensagens românticas
+   • Data de início do relacionamento
+   • Slug público compartilhável
+   • Contador de visualizações
+
+✅ SISTEMA DE ASSINATURAS:
+   • Planos gratuito e premium
+   • Integração com Stripe (global)
+   • Integração com Mercado Pago (LATAM)
+   • Webhooks para atualização automática
+   • Período de trial (7 dias)
+   • Controle de expiração
+
+✅ GERENCIAMENTO DE MÍDIA:
+   • Upload de imagens
+   • Upload de vídeos
+   • Upload de áudio (música)
+   • Armazenamento local ou cloud (AWS S3/Cloudinary)
+
+✅ DASHBOARD:
+   • Visualização de estatísticas
+   • Gerenciamento de conteúdo
+   • Edição de página do casal
+   • Gerenciamento de assinatura
+
+✅ SEGURANÇA:
+   • Headers de segurança configurados
+   • Rate limiting
+   • HTTPS obrigatório em produção
+   • SQL injection protection (Prisma)
+   • JWT seguro (NextAuth)
+   • Senhas criptografadas (bcrypt)
+
+✅ PERFORMANCE:
+   • SWC minification
+   • Otimização de imagens
+   • Server-Side Rendering (SSR)
+   • Static Site Generation (SSG)
+   • API caching
+   • Database connection pooling
+
+═══════════════════════════════════════════════════════════════════════════════
+                        OBSERVAÇÕES IMPORTANTES
+═══════════════════════════════════════════════════════════════════════════════
+
+⚠️ ARQUIVOS SENSÍVEIS:
+   • .env contém credenciais reais (NÃO COMMITAR)
+   • .env.example é um template seguro para compartilhar
+   • Secrets do Stripe/Mercado Pago devem ser mantidos seguros
+
+⚠️ BANCO DE DADOS:
+   • Requer PostgreSQL ativo e acessível
+   • As migrations devem ser executadas antes do primeiro uso
+   • Backup regular é recomendado para produção
+
+⚠️ PRODUÇÃO:
+   • Sempre usar HTTPS
+   • Configurar variáveis de ambiente corretamente
+   • Executar build de produção (npm run build)
+   • Monitorar logs e health checks
+   • Implementar backups automáticos
+
+⚠️ PAGAMENTOS:
+   • Testar webhooks em ambiente de teste primeiro
+   • Validar assinaturas antes de liberar recursos
+   • Manter logs de transações
+
+✅ DOCUMENTAÇÃO COMPLETA:
+   • O projeto possui documentação extensa em Markdown e PDF
+   • Guias de deployment, segurança e testes disponíveis
+   • Consultar DEPLOYMENT_GUIDE.md para instruções detalhadas
+
+✅ TESTES:
+   • Suite de testes Jest configurada
+   • Testes unitários e de integração
+   • Mocks configurados para APIs externas
+   • Comando: npm test
+
+✅ DOCKER:
+   • Dockerfile otimizado para produção
+   • docker-compose.yml com serviços completos
+   • Inclui PostgreSQL, Nginx e aplicação
+   • Configuração de volumes para persistência
+
+✅ MONITORAMENTO:
+   • Health check endpoint: /api/health
+   • Scripts de monitoramento disponíveis
+   • Logs estruturados em /logs/
+
+═══════════════════════════════════════════════════════════════════════════════
+                              CONCLUSÃO
+═══════════════════════════════════════════════════════════════════════════════
+
+O Timming LoveU é uma aplicação COMPLETA e PRONTA PARA PRODUÇÃO, construída
+com tecnologias modernas e melhores práticas. A estrutura é bem organizada,
+com separação clara de responsabilidades, documentação extensa e ferramentas
+de desenvolvimento robustas.
+
+PRÓXIMOS PASSOS RECOMENDADOS:
+
+1. ✅ Revisar e configurar variáveis de ambiente (.env)
+2. ✅ Configurar banco de dados PostgreSQL
+3. ✅ Executar npm install para instalar dependências
+4. ✅ Executar migrations do Prisma
+5. ✅ Iniciar em modo desenvolvimento (npm run dev)
+6. ✅ Testar funcionalidades principais
+7. ✅ Configurar pagamentos (Stripe ou Mercado Pago)
+8. ✅ Preparar para deploy em produção
+
+STATUS: ✅ PRONTO PARA DESENVOLVIMENTO E DEPLOY
+
+═══════════════════════════════════════════════════════════════════════════════
+Relatório gerado automaticamente em: 28/10/2025
+Localização do projeto: /home/ubuntu/timming_love_u/TimmingLoveU/
+Versão do Next.js: 14.2.33
+═══════════════════════════════════════════════════════════════════════════════

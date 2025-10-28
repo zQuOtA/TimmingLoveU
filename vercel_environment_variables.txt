@@ -1,0 +1,120 @@
+# ============================================
+# TIMMING LOVEU - PRODUCTION ENVIRONMENT
+# ============================================
+# Arquivo de variáveis de ambiente para Vercel
+# Criado em: 28 de Outubro de 2025
+# 
+# INSTRUÇÕES DE USO:
+# 1. Renomeie para ".env" se for usar localmente
+# 2. Para Vercel: copie e cole cada linha no painel
+#    Settings → Environment Variables
+# ============================================
+
+# ============================================
+# DATABASE CONFIGURATION (OBRIGATÓRIO)
+# ============================================
+DATABASE_URL="postgresql://neondb_owner:npg_0CBHJVFEPz9L@ep-weathered-base-acxmst6l-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+
+# ============================================
+# NEXTAUTH CONFIGURATION (OBRIGATÓRIO)
+# ============================================
+# Secret gerado para criptografia JWT
+NEXTAUTH_SECRET="s+Se149zp2sGF15kaqsVM8i/3oqkobDLvcpxfERvGLo="
+
+# URL da aplicação (ATUALIZE após primeiro deploy)
+# Formato: https://seu-dominio.vercel.app (COM https://, SEM barra no final)
+NEXTAUTH_URL="https://timming-loveu.vercel.app"
+
+# ============================================
+# NODE ENVIRONMENT (OBRIGATÓRIO)
+# ============================================
+NODE_ENV="production"
+
+# ============================================
+# MERCADO PAGO CONFIGURATION (OBRIGATÓRIO)
+# ============================================
+# Provider de pagamento
+PAYMENT_PROVIDER="mercadopago"
+
+# Public Key (Chave Pública)
+MERCADOPAGO_PUBLIC_KEY="APP_USR-9cf7e4b9-b410-4d9e-b8f3-6f9e29ce2a0c"
+
+# Access Token (Token de Acesso)
+MERCADOPAGO_ACCESS_TOKEN="APP_USR-1678121204668263-102301-c2a9d6bed0f5c2648c3811549d6e1309-712155332"
+
+# Webhook Secret (para validação de webhooks)
+MERCADOPAGO_WEBHOOK_SECRET="af4030881cd1689041d91b417b0cdfdd2676534137d5f731297afc1e5756f17f"
+
+# ============================================
+# SUBSCRIPTION SETTINGS (OBRIGATÓRIO)
+# ============================================
+# Preço em centavos (990 = R$ 9,90)
+SUBSCRIPTION_PRICE="990"
+
+# Moeda
+SUBSCRIPTION_CURRENCY="BRL"
+
+# Período de teste grátis (em dias)
+TRIAL_PERIOD_DAYS="7"
+
+# ============================================
+# OPTIONAL: EMAIL CONFIGURATION
+# ============================================
+# Descomente e configure se quiser enviar emails
+# EMAIL_SERVER="smtp://apikey:SUA-API-KEY@smtp.sendgrid.net:587"
+# EMAIL_FROM="TimmingLoveU <noreply@timmingloveu.shop>"
+
+# ============================================
+# OPTIONAL: CLOUD STORAGE (CLOUDINARY)
+# ============================================
+# Descomente se configurar Cloudinary para uploads
+# CLOUDINARY_CLOUD_NAME="seu-cloud-name"
+# CLOUDINARY_API_KEY="sua-api-key"
+# CLOUDINARY_API_SECRET="seu-api-secret"
+
+# ============================================
+# OPTIONAL: ANALYTICS & MONITORING
+# ============================================
+# Google Analytics
+# GOOGLE_ANALYTICS_ID="G-XXXXXXXXXX"
+
+# Sentry (Monitoramento de Erros)
+# SENTRY_DSN="https://xxxxx@xxxxx.ingest.sentry.io/xxxxx"
+
+# ============================================
+# OPTIONAL: RATE LIMITING (UPSTASH REDIS)
+# ============================================
+# UPSTASH_REDIS_REST_URL="https://..."
+# UPSTASH_REDIS_REST_TOKEN="..."
+
+# ============================================
+# NOTAS IMPORTANTES
+# ============================================
+# 1. NUNCA commite este arquivo no Git
+# 2. Adicione .env ao .gitignore
+# 3. Use apenas na Vercel ou localmente
+# 4. ATUALIZE NEXTAUTH_URL após primeiro deploy
+# 5. Configure webhook: https://www.mercadopago.com.br/developers/panel/webhooks
+#    URL: https://SEU-DOMINIO/api/webhooks/mercadopago
+#    Eventos: payment, subscription
+# ============================================
+
+
+# ============================================
+# FORMATO SIMPLIFICADO PARA COPIAR/COLAR NA VERCEL
+# ============================================
+# Copie as linhas abaixo (sem os comentários #) e cole
+# diretamente no painel Environment Variables da Vercel
+# ============================================
+
+DATABASE_URL=postgresql://neondb_owner:npg_0CBHJVFEPz9L@ep-weathered-base-acxmst6l-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+NEXTAUTH_SECRET=s+Se149zp2sGF15kaqsVM8i/3oqkobDLvcpxfERvGLo=
+NEXTAUTH_URL=https://timming-loveu.vercel.app
+NODE_ENV=production
+PAYMENT_PROVIDER=mercadopago
+MERCADOPAGO_PUBLIC_KEY=APP_USR-9cf7e4b9-b410-4d9e-b8f3-6f9e29ce2a0c
+MERCADOPAGO_ACCESS_TOKEN=APP_USR-1678121204668263-102301-c2a9d6bed0f5c2648c3811549d6e1309-712155332
+MERCADOPAGO_WEBHOOK_SECRET=af4030881cd1689041d91b417b0cdfdd2676534137d5f731297afc1e5756f17f
+SUBSCRIPTION_PRICE=990
+SUBSCRIPTION_CURRENCY=BRL
+TRIAL_PERIOD_DAYS=7

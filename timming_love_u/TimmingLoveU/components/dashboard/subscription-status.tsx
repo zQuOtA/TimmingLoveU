@@ -55,6 +55,25 @@ export function SubscriptionStatus() {
   }
 
   const { subscription: sub } = subscription;
+  
+  if (!sub) {
+    return (
+      <Card className="border-yellow-200 bg-yellow-50">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <AlertCircle className="w-5 h-5 text-yellow-600" />
+            <CardTitle className="text-lg">Erro ao carregar assinatura</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <CardDescription className="text-yellow-700">
+            Não foi possível carregar as informações da assinatura.
+          </CardDescription>
+        </CardContent>
+      </Card>
+    );
+  }
+  
   const statusConfig = {
     trial: {
       icon: Clock,
@@ -145,13 +164,13 @@ export function SubscriptionStatus() {
           </div>
         )}
 
-        {sub.cancelAtPeriodEnd && (
+        {sub?.cancelAtPeriodEnd && (
           <div className="p-3 rounded-lg bg-yellow-50 border border-yellow-200">
             <p className="text-sm font-semibold text-yellow-800">
               Assinatura será cancelada
             </p>
             <p className="text-xs text-yellow-700 mt-1">
-              Você terá acesso até {formatDate(sub.currentPeriodEnd)}
+              Você terá acesso até {sub.currentPeriodEnd && formatDate(sub.currentPeriodEnd)}
             </p>
           </div>
         )}
@@ -167,7 +186,7 @@ export function SubscriptionStatus() {
           </div>
         )}
       </CardContent>
-      {!sub.cancelAtPeriodEnd && hasActiveSubscription && (
+      {!sub?.cancelAtPeriodEnd && hasActiveSubscription && (
         <CardFooter className="flex gap-2">
           <Button asChild variant="outline" size="sm" className="flex-1">
             <Link href="/pricing">Ver Planos</Link>

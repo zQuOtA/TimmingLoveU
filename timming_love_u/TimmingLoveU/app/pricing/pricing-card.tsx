@@ -87,9 +87,9 @@ export default function PricingCard({ isLoggedIn }: PricingCardProps) {
 
       // Redirect based on provider
       if (config.provider === 'stripe') {
-        const stripe = await loadStripe(config.publicKey);
-        if (stripe && data.sessionId) {
-          await stripe.redirectToCheckout({ sessionId: data.sessionId });
+        // Use the URL from the checkout session instead of redirectToCheckout
+        if (data.url) {
+          window.location.href = data.url;
         }
       } else if (config.provider === 'mercadopago') {
         // Redirect to Mercado Pago checkout

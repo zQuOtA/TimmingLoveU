@@ -104,8 +104,8 @@ export async function POST(request: Request) {
 
       return NextResponse.json({
         provider: 'mercadopago',
-        preferenceId: preference.body.id,
-        initPoint: preference.body.init_point,
+        preferenceId: preference.id,
+        initPoint: preference.init_point,
       });
     }
   } catch (error) {

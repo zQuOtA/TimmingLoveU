@@ -4,7 +4,7 @@ import { PAYMENT_CONFIG } from './config';
 
 export async function createOrUpdateSubscription({
   userId,
-  planId,
+  planoId,
   provider,
   subscriptionId,
   customerId,
@@ -14,7 +14,7 @@ export async function createOrUpdateSubscription({
   currentPeriodEnd,
 }: {
   userId: string;
-  planId: string;
+  planoId: string;
   provider: 'stripe' | 'mercadopago';
   subscriptionId?: string;
   customerId?: string;
@@ -33,7 +33,7 @@ export async function createOrUpdateSubscription({
     return await prisma.userSubscription.update({
       where: { id: existingSubscription.id },
       data: {
-        planId,
+        planoId,
         provider,
         subscriptionId,
         customerId,
@@ -54,7 +54,7 @@ export async function createOrUpdateSubscription({
   return await prisma.userSubscription.create({
     data: {
       userId,
-      planId,
+      planoId,
       provider,
       subscriptionId,
       customerId,

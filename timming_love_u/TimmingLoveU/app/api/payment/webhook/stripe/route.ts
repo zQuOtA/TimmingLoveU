@@ -39,16 +39,16 @@ export async function POST(request: Request) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
         const userId = session.metadata?.userId;
-        const planId = session.metadata?.planId;
+        const planoId = session.metadata?.planId;
 
-        if (!userId || !planId) {
+        if (!userId || !planoId) {
           throw new Error('Missing userId or planId in session metadata');
         }
 
         // Create subscription record with trial
         await createOrUpdateSubscription({
           userId,
-          planId,
+          planoId,
           provider: 'stripe',
           subscriptionId: session.subscription as string,
           customerId: session.customer as string,
@@ -68,18 +68,21 @@ export async function POST(request: Request) {
       case 'customer.subscription.created': {
         const subscription = event.data.object as Stripe.Subscription;
         const userId = subscription.metadata?.userId;
-        const planId = subscription.metadata?.planId;
+        const planoId = subscription.metadata?.planId;
 
-        if (!userId || !planId) {
+        if (!userId || !planoId) {
           console.warn('Missing userId or planId in subscription metadata');
           break;
         }
 
         const status = subscription.status === 'trialing' ? 'trial' : subscription.status;
+        
+        // TypeScript may not recognize these properties but they exist on Stripe.Subscription
+        const subAny = subscription as any;
 
         await createOrUpdateSubscription({
           userId,
-          planId,
+          planoId,
           provider: 'stripe',
           subscriptionId: subscription.id,
           customerId: subscription.customer as string,
@@ -87,8 +90,12 @@ export async function POST(request: Request) {
           trialEndsAt: subscription.trial_end
             ? new Date(subscription.trial_end * 1000)
             : undefined,
-          currentPeriodStart: new Date(subscription.current_period_start * 1000),
-          currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+          currentPeriodStart: subAny.current_period_start
+            ? new Date(subAny.current_period_start * 1000)
+            : undefined,
+          currentPeriodEnd: subAny.current_period_end
+            ? new Date(subAny.current_period_end * 1000)
+            : undefined,
         });
 
         break;
@@ -124,7 +131,8 @@ export async function POST(request: Request) {
 
       case 'invoice.payment_succeeded': {
         const invoice = event.data.object as Stripe.Invoice;
-        const subscriptionId = invoice.subscription as string;
+        const invoiceAny = invoice as any;
+        const subscriptionId = invoiceAny.subscription as string;
 
         if (subscriptionId) {
           // Find subscription
@@ -134,14 +142,15 @@ export async function POST(request: Request) {
 
           if (userSubscription) {
             // Create transaction record
+            const invAny = invoice as any;
             await createTransaction({
               subscriptionId: userSubscription.id,
               provider: 'stripe',
               providerTxnId: invoice.id,
-              amount: invoice.amount_paid / 100,
-              currency: invoice.currency.toUpperCase(),
+              amount: (invAny.amount_paid || 0) / 100,
+              currency: (invoice.currency || 'usd').toUpperCase(),
               status: 'completed',
-              paymentMethod: invoice.payment_intent as string,
+              paymentMethod: invAny.payment_intent as string,
               metadata: { invoice },
             });
 
@@ -160,7 +169,8 @@ export async function POST(request: Request) {
 
       case 'invoice.payment_failed': {
         const invoice = event.data.object as Stripe.Invoice;
-        const subscriptionId = invoice.subscription as string;
+        const invoiceAny = invoice as any;
+        const subscriptionId = invoiceAny.subscription as string;
 
         if (subscriptionId) {
           const userSubscription = await prisma.userSubscription.findUnique({
@@ -169,12 +179,13 @@ export async function POST(request: Request) {
 
           if (userSubscription) {
             // Create transaction record for failed payment
+            const invAny2 = invoice as any;
             await createTransaction({
               subscriptionId: userSubscription.id,
               provider: 'stripe',
               providerTxnId: invoice.id,
-              amount: invoice.amount_due / 100,
-              currency: invoice.currency.toUpperCase(),
+              amount: (invAny2.amount_due || 0) / 100,
+              currency: (invoice.currency || 'usd').toUpperCase(),
               status: 'failed',
               metadata: { invoice },
             });

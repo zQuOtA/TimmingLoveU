@@ -13,29 +13,28 @@ export async function POST(request: Request) {
       const paymentId = body.data.id;
 
       // Get payment details from Mercado Pago
-      const payment = await getMercadoPagoPayment(paymentId);
-      const paymentData = payment.body;
+      const paymentData = await getMercadoPagoPayment(paymentId);
 
       const userId = paymentData.external_reference;
-      const planId = paymentData.metadata?.plan_id;
+      const planoId = paymentData.metadata?.plan_id;
 
       if (!userId) {
         console.warn('Missing userId in payment data');
         return NextResponse.json({ received: true });
       }
 
-      // Get or create a default plan if planId is not available
-      let actualPlanId = planId;
-      if (!actualPlanId) {
+      // Get or create a default plan if planoId is not available
+      let actualPlanoId = planoId;
+      if (!actualPlanoId) {
         const defaultPlan = await prisma.planoAssinatura.findFirst({
           where: { ativo: true },
         });
         if (defaultPlan) {
-          actualPlanId = defaultPlan.id;
+          actualPlanoId = defaultPlan.id;
         }
       }
 
-      if (!actualPlanId) {
+      if (!actualPlanoId) {
         throw new Error('No plan found');
       }
 
@@ -50,7 +49,7 @@ export async function POST(request: Request) {
           // Create new subscription with trial
           userSubscription = await createOrUpdateSubscription({
             userId,
-            planId: actualPlanId,
+            planoId: actualPlanoId,
             provider: 'mercadopago',
             customerId: paymentData.payer?.id,
             status: 'trial',
@@ -62,10 +61,10 @@ export async function POST(request: Request) {
           subscriptionId: userSubscription.id,
           provider: 'mercadopago',
           providerTxnId: paymentId.toString(),
-          amount: paymentData.transaction_amount,
-          currency: paymentData.currency_id,
+          amount: paymentData.transaction_amount || 0,
+          currency: paymentData.currency_id || 'BRL',
           status: 'completed',
-          paymentMethod: paymentData.payment_method_id,
+          paymentMethod: paymentData.payment_method_id || 'unknown',
           metadata: { payment: paymentData },
         });
 
@@ -91,10 +90,10 @@ export async function POST(request: Request) {
             subscriptionId: userSubscription.id,
             provider: 'mercadopago',
             providerTxnId: paymentId.toString(),
-            amount: paymentData.transaction_amount,
-            currency: paymentData.currency_id,
+            amount: paymentData.transaction_amount || 0,
+            currency: paymentData.currency_id || 'BRL',
             status: 'failed',
-            paymentMethod: paymentData.payment_method_id,
+            paymentMethod: paymentData.payment_method_id || 'unknown',
             metadata: { payment: paymentData },
           });
         }
